@@ -18,9 +18,7 @@ cd $( dirname "${BASH_SOURCE[0]}" ) # go to where build.sh is located
 export DEBIAN_FRONTEND=noninteractive # jump over "Configuring tzdata"
 export LC_ALL=C
 
-$apt_get update
-
-LLVM_DEP_PACKAGES="build-essential make cmake ninja-build git binutils-gold binutils-dev curl wget python3"
+LLVM_DEP_PACKAGES="build-essential ninja-build git binutils-gold binutils-dev curl wget python3"
 $apt_get install -y $LLVM_DEP_PACKAGES
 
 export CXX=g++
@@ -31,6 +29,11 @@ unset CXXFLAGS
 pushd instrument
 
 pushd llvm_tools
+
+chmod +x cmake-3.22.0-linux-x86_64.sh
+./cmake-3.22.0-linux-x86_64.sh --prefix=/usr/local --skip-license
+export PATH=/usr/local/bin:$PATH
+cmake --version
 
 tar -xf llvm-11.0.0.src.tar.xz
 mv      llvm-11.0.0.src        llvm

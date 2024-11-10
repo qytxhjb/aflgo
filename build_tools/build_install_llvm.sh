@@ -22,8 +22,7 @@ NPROC=$(expr $(nproc) / 2)
 
 # zlib1g-dev is needed for llvm-profdata to handle coverage data from rust compiler
 LLVM_DEP_PACKAGES="build-essential make cmake ninja-build git python3 python3-distutils g++-multilib binutils-dev zlib1g-dev"
-apt-get update
-apt-get install -y $LLVM_DEP_PACKAGES --no-install-recommends
+yum install -y $LLVM_DEP_PACKAGES --no-install-recommends
 
 # Checkout
 CHECKOUT_RETRIES=10
@@ -173,8 +172,8 @@ cp -r $LLVM_SRC/compiler-rt/lib/fuzzer $SRC/libfuzzer
 # Cleanup
 rm -rf $LLVM_SRC
 rm -rf $SRC/chromium_tools
-apt-get remove --purge -y $LLVM_DEP_PACKAGES
-apt-get autoremove -y
+yum remove --purge -y $LLVM_DEP_PACKAGES
+yum autoremove -y
 
 # Delete unneeded parts of LLVM to reduce image size.
 # See https://github.com/google/oss-fuzz/issues/5170
